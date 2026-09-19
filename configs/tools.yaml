@@ -1,0 +1,186 @@
+# ============================================================
+# Tool Registry — SatQuery AI
+# Each tool has a name, version, supported tasks, modalities,
+# input/output schema, and parameters.
+# ============================================================
+
+tools:
+
+  # ----------------------------------------------------------
+  # MEASUREMENT TOOLS (deterministic)
+  # ----------------------------------------------------------
+
+  ndvi:
+    name: NDVI Calculator
+    version: "1.0"
+    type: measurement
+    description: Normalized Difference Vegetation Index
+    supported_tasks: [single_image, landcover]
+    supported_modalities: [optical, multispectral]
+    required_bands: [nir, red]
+    output: ndvi_array, statistics
+    parameters:
+      clip_range: [-1.0, 1.0]
+      vegetation_threshold: 0.3
+
+  ndwi:
+    name: NDWI Calculator
+    version: "1.0"
+    type: measurement
+    description: Normalized Difference Water Index
+    supported_tasks: [single_image, landcover]
+    supported_modalities: [optical, multispectral]
+    required_bands: [green, nir]
+    output: ndwi_array, statistics
+    parameters:
+      clip_range: [-1.0, 1.0]
+      water_threshold: 0.0
+
+  built_up_proxy:
+    name: Built-Up Proxy
+    version: "1.0"
+    type: measurement
+    description: Spectral/texture proxy for built-up area estimation
+    supported_tasks: [single_image, landcover]
+    supported_modalities: [optical, multispectral]
+    output: built_up_mask, area_km2, percentage
+    parameters:
+      min_area_pixels: 10
+
+  area_calculator:
+    name: Area Calculator
+    version: "1.0"
+    type: measurement
+    description: GSD-aware pixel area to physical area conversion
+    supported_tasks: [all]
+    supported_modalities: [optical, multispectral, sar]
+    output: area_m2, area_km2, percentage
+
+  # ----------------------------------------------------------
+  # ANALYSIS TOOLS
+  # ----------------------------------------------------------
+
+  landcover_kmeans:
+    name: Land Cover (K-Means)
+    version: "1.0"
+    type: analysis
+    description: >
+      MiniBatch K-Means spectral+texture clustering
+      with rule-based class assignment.
+      Classes: water, vegetation, built-up, bare-soil, other.
+    supported_tasks: [single_image, landcover]
+    supported_modalities: [optical, multispectral]
+    output: class_map, class_areas, class_percentages
+    parameters:
+      n_clusters: 5
+      max_iter: 300
+      batch_size: 1000
+
+  change_vector_otsu:
+    name: Change Detector (CVA + Otsu)
+    version: "1.0"
+    type: analysis
+    description: >
+      Image differencing + change vector analysis
+      with Otsu thresholding and morphological cleanup.
+    supported_tasks: [change_analysis, bitemporal]
+    supported_modalities: [optical, multispectral, sar]
+    output: change_mask, changed_area_km2, change_percentage, transition_matrix
+    parameters:
+      threshold_method: otsu       # otsu | percentile | fixed
+      threshold_percentile: 95
+      min_change_area_pixels: 5
+      morphology_kernel_size: 3
+
+  image_registration:
+    name: Image Registration (ORB+RANSAC)
+    version: "1.0"
+    type: preprocessing
+    description: ORB keypoint matching with RANSAC homography estimation
+    supported_tasks: [change_analysis, bitemporal, optical_sar]
+    supported_modalities: [optical, multispectral, sar]
+    output: registered_image, transform_matrix, quality_score
+    parameters:
+      n_features: 5000
+      min_match_count: 10
+      ransac_reproj_threshold: 4.0
+
+  optical_sar_feature_fusion:
+    name: Optical-SAR Feature Fusion
+    version: "1.0"
+    type: analysis
+    description: >
+      Feature-level fusion of optical (spectral + NDVI + NDWI)
+      and SAR (VV, VH, texture) for joint classification.
+    supported_tasks: [optical_sar]
+    supported_modalities: [optical, sar]
+    output: fusion_map, class_map, confidence_map
+    parameters:
+      fusion_method: feature_concat  # feature_concat | decision_fusion
+
+  # ----------------------------------------------------------
+  # VISION TOOLS (VLM-backed, stubs in Stage 1)
+  # ----------------------------------------------------------
+
+  vqa:
+    name: Visual Question Answering
+    version: "1.0-stub"
+    type: vision
+    description: Single-image VQA using adapted remote-sensing VLM
+    supported_tasks: [single_image, vqa]
+    supported_modalities: [optical, multispectral, sar]
+    output: answer, confidence
+    parameters:
+      max_new_tokens: 256
+
+  captioning:
+    name: Scene Captioning
+    version: "1.0-stub"
+    type: vision
+    description: Scene description / captioning using adapted VLM
+    supported_tasks: [single_image, caption]
+    supported_modalities: [optical, multispectral, sar]
+    output: caption, confidence
+
+  grounding:
+    name: Text-Guided Grounding
+    version: "1.0-stub"
+    type: vision
+    description: Text-guided region detection (Grounding DINO + SAM2)
+    supported_tasks: [single_image, grounding]
+    supported_modalities: [optical, multispectral]
+    output: bounding_boxes, masks, labels, confidence
+
+  change_vqa:
+    name: Change VQA
+    version: "1.0-stub"
+    type: vision
+    description: Change-based visual question answering from bi-temporal pair
+    supported_tasks: [change_analysis, bitemporal]
+    supported_modalities: [optical, multispectral, sar]
+    output: answer, confidence
+
+  # ----------------------------------------------------------
+  # REPORT TOOLS
+  # ----------------------------------------------------------
+
+  report_json:
+    name: JSON Report Generator
+    version: "1.0"
+    type: report
+    supported_tasks: [all]
+    output: report_json
+
+  report_markdown:
+    name: Markdown Report Generator
+    version: "1.0"
+    type: report
+    supported_tasks: [all]
+    output: report_md
+
+  report_geojson:
+    name: GeoJSON Export
+    version: "1.0"
+    type: report
+    supported_tasks: [grounding, change_analysis]
+    output: geojson

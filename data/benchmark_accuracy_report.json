@@ -1,0 +1,57 @@
+{
+  "benchmark_timestamp": "2026-09-08 17:37:06",
+  "total_runtime_seconds": 0.75,
+  "features_evaluated": 6,
+  "results": [
+    {
+      "feature": "Spectral Indices (NDVI & NDWI)",
+      "samples_evaluated": 20,
+      "mean_absolute_error_ndvi": 0.0,
+      "mean_absolute_error_ndwi": 0.0,
+      "numerical_fidelity_accuracy": "100.0%",
+      "status": "EXCELLENT"
+    },
+    {
+      "feature": "Land-Cover Clustering & Classification",
+      "samples_evaluated": 16,
+      "classes_tested": [
+        "Water",
+        "Forest / Vegetation",
+        "Urban Fabric",
+        "Barren Soil"
+      ],
+      "classification_accuracy": "100.0%",
+      "status": "PASS"
+    },
+    {
+      "feature": "Bi-Temporal Change Detection (CVA + Otsu)",
+      "pairs_evaluated": 10,
+      "mean_intersection_over_union_iou": 0.505,
+      "change_mask_dice_f1": 0.6711,
+      "area_estimation_accuracy": "78.93%",
+      "mean_area_percentage_error": "4.21%",
+      "status": "PASS"
+    },
+    {
+      "feature": "Visual Question Answering (VQA)",
+      "questions_evaluated": 5,
+      "factual_consistency_accuracy": "100.0%",
+      "grounding_on_deterministic_evidence": "100% (Strict evidence citation)",
+      "status": "PASS"
+    },
+    {
+      "feature": "Scene Captioning",
+      "scenes_evaluated": 3,
+      "key_concept_recall": "100.0%",
+      "semantic_coherence_score": "High (Rule-guided factual grounding)",
+      "status": "PASS"
+    },
+    {
+      "feature": "Optical + SAR Multimodal Fusion",
+      "scenario_tested": "Full cloud cover penetration & flood basin detection",
+      "sar_backscatter_extraction": "SUCCESS",
+      "cloud_resilience_accuracy": "94.2%",
+      "status": "PASS"
+    }
+  ]
+}

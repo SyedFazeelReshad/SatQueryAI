@@ -1,0 +1,56 @@
+# SatQuery AI — Training Configuration
+# Stage 2: Qwen2-VL-2B-Instruct LoRA Adaptation on BigEarthNet
+
+base_model: Qwen/Qwen2-VL-2B-Instruct
+model_type: qwen2_vl
+
+# Dynamic resolution settings
+min_pixels: 200704   # 256 * 28 * 28
+max_pixels: 1003520  # 1280 * 28 * 28
+
+# Output paths
+output_dir: ../models/trained/rs_vlm_lora/
+logging_dir: ../models/trained/rs_vlm_lora/logs/
+
+# Hyperparameters (Optimized for Colab T4 GPU 16GB VRAM)
+num_train_epochs: 3
+per_device_train_batch_size: 2
+per_device_eval_batch_size: 2
+gradient_accumulation_steps: 8    # Effective batch size = 16
+learning_rate: 1.5e-4
+weight_decay: 0.01
+warmup_ratio: 0.05
+lr_scheduler_type: cosine
+max_seq_length: 512
+gradient_checkpointing: true
+
+# LoRA Configuration
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+target_modules:
+  - "q_proj"
+  - "k_proj"
+  - "v_proj"
+  - "o_proj"
+  - "gate_proj"
+  - "up_proj"
+  - "down_proj"
+
+# Mixed Precision & Quantization
+fp16: true
+bf16: false
+load_in_4bit: true               # QLoRA for minimum VRAM overhead on T4 GPU
+
+# Evaluation & Checkpointing
+evaluation_strategy: steps
+eval_steps: 100
+save_strategy: steps
+save_steps: 100
+save_total_limit: 2
+load_best_model_at_end: true
+metric_for_best_model: eval_loss
+
+# Reproducibility
+seed: 42
+dataloader_num_workers: 2

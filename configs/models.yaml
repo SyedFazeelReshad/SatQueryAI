@@ -1,0 +1,83 @@
+# ============================================================
+# Primary VLM — Qwen2-VL-2B-Instruct (Stage 2)
+# ============================================================
+primary_vlm:
+  provider: local            # local | api | stub
+  stage: 3                   # 1=stub, 2=adapted, 3=full
+  model_name: Qwen/Qwen2-VL-2B-Instruct
+  adapter_path: "models/trained/rs_vlm_lora/"
+  device: auto               # auto | cpu | cuda | mps
+  quantization: none         # none | 4bit | 8bit (use 4bit on low-memory GPU)
+  max_new_tokens: 150
+  temperature: 0.1           # low temp = factual/deterministic answers
+  top_p: 0.9
+  min_pixels: 256            # Qwen2-VL dynamic resolution bounds (256 = 16x16)
+  max_pixels: 512            # 512 for responsive CPU inference without lag
+  system_prompt: >
+    You are SatQuery AI, a specialised remote sensing analyst.
+    You are given one or more satellite images along with deterministic measurements
+    (NDVI, area, change percentage) computed directly from the raster data.
+    Your role is to interpret the measurements and scene visually and provide
+    precise, scientifically accurate natural language answers.
+    Never fabricate measurements. Always cite the provided measurements.
+    Label uncertainty explicitly. Use remote sensing terminology correctly.
+  description: >
+    Qwen2-VL-2B-Instruct fine-tuned with LoRA on BigEarthNet.
+    Supports dynamic resolution up to 1280x1280 pixels without distortion.
+    Native bounding box coordinate generation for grounding tasks.
+    Training: LoRA rank=16, alpha=32, epochs=3, BigEarthNet 10K samples.
+
+# ============================================================
+# Object Grounding — Grounding DINO 1.5 Edge
+# ============================================================
+grounding_dino:
+  enabled: true              # enabled in Stage 2
+  model_id: IDEA-Research/grounding-dino-1.5-edge
+  checkpoint_path: models/grounding/gdino_1.5_edge.pth
+  config_path: models/grounding/gdino_1.5_edge_config.py
+  device: auto
+  box_threshold: 0.30        # lower = more detections, higher = precision
+  text_threshold: 0.25
+  description: >
+    Grounding DINO 1.5 Edge — 20% better recall than tiny variant.
+    Zero-shot text-guided object localization in satellite imagery.
+    Handles RS-specific objects: runways, reservoirs, roads, buildings, ships.
+    Pretrained weights only — not fine-tuned by us.
+
+# ============================================================
+# Segmentation — MobileSAM v2
+# ============================================================
+mobile_sam:
+  enabled: true              # enabled in Stage 2
+  checkpoint_path: models/segmentation/mobile_sam_v2.pt
+  model_type: vit_t          # vit_t = tiny ViT (fast, CPU-capable)
+  device: auto
+  description: >
+    MobileSAM v2 — 40x faster than SAM 2 while maintaining pixel accuracy.
+    Runs on CPU without GPU. Converts Grounding DINO boxes into polygon masks.
+    Generates spatial overlays of detected features for visualization.
+    Pretrained weights only — not fine-tuned by us.
+
+# ============================================================
+# Change Detection (Deterministic — Stage 1 Verified)
+# ============================================================
+change_detection:
+  method: classical          # classical | learned (Stage 3)
+  algorithms:
+    - image_registration_orb
+    - change_vector_analysis
+    - otsu_thresholding
+    - morphological_cleanup
+  description: >
+    Stage 1/2: Classical deterministic change detection.
+    All physical measurements (changed area km2, percentage) are deterministic.
+    Qwen2-VL provides semantic explanation of detected changes.
+
+# ============================================================
+# Optical-SAR Fusion
+# ============================================================
+optical_sar_fusion:
+  method: feature_based      # feature_based | learned (Stage 3)
+  description: >
+    Stage 1/2: Statistical feature fusion of optical and SAR backscatter.
+    Qwen2-VL provides cross-modal interpretation of fused features.

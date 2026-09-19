@@ -1,0 +1,89 @@
+# ============================================================
+# Remote Sensing Processing Thresholds — SatQuery AI
+# All values are configurable. Avoid hard-coding these
+# in source code; read from this file via app config.
+# ============================================================
+
+# ----------------------------------------------------------
+# NDVI Thresholds
+# ----------------------------------------------------------
+ndvi:
+  vegetation_threshold: 0.3      # pixels above → vegetation
+  dense_vegetation_threshold: 0.6
+  sparse_vegetation_threshold: 0.15
+  clip_min: -1.0
+  clip_max: 1.0
+
+# ----------------------------------------------------------
+# NDWI Thresholds
+# ----------------------------------------------------------
+ndwi:
+  water_threshold: 0.0           # pixels above → water
+  high_water_threshold: 0.3
+  clip_min: -1.0
+  clip_max: 1.0
+
+# ----------------------------------------------------------
+# Built-Up Proxy Thresholds
+# ----------------------------------------------------------
+built_up:
+  brightness_threshold: 0.4      # relative brightness
+  ndvi_max: 0.2                  # built-up has low NDVI
+  ndwi_max: 0.0                  # built-up has low NDWI
+  min_area_pixels: 10
+
+# ----------------------------------------------------------
+# Change Detection Thresholds
+# ----------------------------------------------------------
+change_detection:
+  method: otsu                   # otsu | percentile | fixed
+  fixed_threshold: 0.15          # used if method=fixed
+  percentile: 95                 # used if method=percentile
+  min_change_area_pixels: 5      # minimum changed region size
+  morphology_kernel_size: 3      # noise removal kernel
+  magnitude_normalization: true  # normalize change magnitude
+
+# ----------------------------------------------------------
+# Land Cover Classification
+# ----------------------------------------------------------
+landcover:
+  n_clusters: 5
+  classes:
+    - water
+    - vegetation
+    - built_up
+    - bare_soil
+    - other
+  kmeans_max_iter: 300
+  kmeans_batch_size: 1000
+  texture_features: true
+  spectral_features: true
+
+# ----------------------------------------------------------
+# Image Registration
+# ----------------------------------------------------------
+registration:
+  n_features: 5000
+  min_match_count: 10
+  ransac_reproj_threshold: 4.0
+  good_match_ratio: 0.75          # Lowe's ratio test
+  min_quality_score: 0.5         # registration quality threshold
+
+# ----------------------------------------------------------
+# Raster Validation
+# ----------------------------------------------------------
+raster:
+  max_dimension_pixels: 50000
+  min_bands: 1
+  max_file_size_mb: 500
+  supported_formats: [tiff, tif, geotiff, png, jpg, jpeg]
+  preview_max_size: 512           # px for preview generation
+
+# ----------------------------------------------------------
+# SAR Features
+# ----------------------------------------------------------
+sar:
+  expected_bands: [VV, VH]       # typical Sentinel-1
+  backscatter_min_db: -30
+  backscatter_max_db: 10
+  texture_window_size: 7

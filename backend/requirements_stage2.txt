@@ -1,0 +1,32 @@
+# SatQuery AI — Stage 2 Additional Dependencies
+# Install AFTER Stage 1 requirements are already installed:
+#   pip install -r requirements.txt
+#   pip install -r requirements_stage2.txt
+
+# ── VLM Core ──────────────────────────────────────────────────────
+transformers==4.46.3          # Qwen2-VL support requires >=4.45
+peft==0.13.2                  # LoRA / PEFT adapter loading
+accelerate==1.1.1             # device-agnostic model loading (cpu/cuda/mps)
+bitsandbytes==0.44.1          # 4-bit / 8-bit quantization (optional, CUDA only)
+
+# ── Qwen2-VL Utilities ────────────────────────────────────────────
+qwen-vl-utils==0.0.8          # Dynamic resolution preprocessing for Qwen2-VL
+
+# ── Grounding DINO ────────────────────────────────────────────────
+groundingdino-py==0.4.0       # Grounding DINO pure-Python package
+huggingface-hub==0.26.2       # Model weight downloading
+
+# ── MobileSAM ─────────────────────────────────────────────────────
+mobile-sam==0.0.1             # MobileSAM v2 lightweight segmentation
+timm==1.0.11                  # ViT backbone (required by MobileSAM)
+
+# ── Image & Tensor Utilities ──────────────────────────────────────
+torchvision==0.19.1           # Image transforms for VLM preprocessing
+einops==0.8.0                 # Tensor manipulation utilities
+sentencepiece==0.2.0          # Tokenizer for Qwen2-VL
+tiktoken==0.8.0               # Tokenizer utility
+
+# ── Evaluation Metrics ────────────────────────────────────────────
+sacrebleu==2.4.3              # BLEU score for captioning evaluation
+rouge-score==0.1.2            # ROUGE metrics
+evaluate==0.4.3               # HuggingFace evaluation library

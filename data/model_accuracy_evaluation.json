@@ -1,0 +1,49 @@
+{
+  "evaluation_timestamp": "2026-09-08 20:51:08",
+  "total_test_samples": 13,
+  "overall_model_accuracy": "100.0%",
+  "evaluation_runtime_seconds": 0.0,
+  "mode": "deterministic_evidence_grounded",
+  "category_metrics": {
+    "Land Cover": {
+      "samples": 5,
+      "accuracy": "100.0%",
+      "precision": "100.0%",
+      "recall": "100.0%",
+      "f1_score": "100.0%",
+      "status": "PASS"
+    },
+    "Feature Presence": {
+      "samples": 3,
+      "accuracy": "100.0%",
+      "precision": "100.0%",
+      "recall": "100.0%",
+      "f1_score": "100.0%",
+      "status": "PASS"
+    },
+    "Spectral State": {
+      "samples": 2,
+      "accuracy": "100.0%",
+      "precision": "100.0%",
+      "recall": "100.0%",
+      "f1_score": "100.0%",
+      "status": "PASS"
+    },
+    "Change Detection": {
+      "samples": 2,
+      "accuracy": "100.0%",
+      "precision": "100.0%",
+      "recall": "100.0%",
+      "f1_score": "100.0%",
+      "status": "PASS"
+    },
+    "Multimodal Fusion": {
+      "samples": 1,
+      "accuracy": "100.0%",
+      "precision": "100.0%",
+      "recall": "100.0%",
+      "f1_score": "100.0%",
+      "status": "PASS"
+    }
+  }
+}

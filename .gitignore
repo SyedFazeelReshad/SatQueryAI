@@ -1,0 +1,94 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# === Virtual Environments ===
+.env
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# === Node ===
+node_modules/
+.next/
+out/
+.cache/
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# === OS ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Environment secrets ===
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# === Large model files ===
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+*.onnx
+*.h5
+
+# === Large datasets ===
+data/raw/
+data/interim/
+data/processed/
+*.csv.gz
+*.tar.gz
+*.zip
+
+# === Temporary / cache ===
+*.log
+*.tmp
+*.temp
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+.hypothesis/
+
+# === Docker ===
+.dockerignore
+
+# === Generated outputs ===
+backend/uploads/
+backend/outputs/

@@ -1,0 +1,42 @@
+# Dataset Configuration for Training (Stage 2)
+
+bigearthnet:
+  data_path: ../data/raw/bigearthnet/
+  processed_path: ../data/processed/bigearthnet/
+  manifest_path: ../data/manifests/bigearthnet_manifest.json
+  
+  # Use a small subset for initial experiments
+  # Scale up once training pipeline is verified
+  subset_size: 10000             # start with 10k samples
+  use_sar: true                  # include Sentinel-1 SAR bands
+  use_optical: true              # include Sentinel-2 optical bands
+  
+  train_split: 0.8
+  val_split: 0.1
+  test_split: 0.1
+  
+  # Image preprocessing
+  image_size: 224
+  normalize_mean: [0.485, 0.456, 0.406]
+  normalize_std: [0.229, 0.224, 0.225]
+  
+  # QA generation
+  generate_captions: true
+  generate_vqa_pairs: true
+  vqa_templates_path: ../data/manifests/vqa_templates.json
+
+vrsbench:
+  data_path: ../data/raw/vrsbench/
+  processed_path: ../data/processed/vrsbench/
+  tasks: [caption, grounding, vqa]
+  use_for_training: false       # use for evaluation only initially
+
+rsvqa:
+  data_path: ../data/raw/rsvqa/
+  processed_path: ../data/processed/rsvqa/
+  use_for_training: false       # evaluation only initially
+
+cdvqa:
+  data_path: ../data/raw/cdvqa/
+  processed_path: ../data/processed/cdvqa/
+  use_for_training: false       # evaluation only initially

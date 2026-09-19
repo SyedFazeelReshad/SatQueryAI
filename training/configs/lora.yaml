@@ -1,0 +1,24 @@
+# LoRA Configuration for SatQuery AI VLM Adaptation
+
+lora:
+  r: 16                          # LoRA rank
+  lora_alpha: 32                 # LoRA alpha (usually 2x rank)
+  target_modules:                # modules to apply LoRA to
+    - q_proj
+    - v_proj
+    - k_proj
+    - o_proj
+  lora_dropout: 0.1
+  bias: none
+  task_type: CAUSAL_LM
+
+peft:
+  method: lora                   # lora | qlora | prefix_tuning
+  use_qlora: false              # set true for 4-bit QLoRA on smaller GPUs
+
+quantization:
+  load_in_4bit: false
+  load_in_8bit: false
+  bnb_4bit_compute_dtype: bfloat16
+  bnb_4bit_use_double_quant: true
+  bnb_4bit_quant_type: nf4

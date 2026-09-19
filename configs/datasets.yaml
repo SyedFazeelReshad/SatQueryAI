@@ -1,0 +1,56 @@
+# ============================================================
+# Dataset Configuration — SatQuery AI
+# ============================================================
+
+# Primary adaptation dataset (SIH26167 requirement)
+bigearthnet:
+  name: BigEarthNet
+  description: >
+    Multi-label remote-sensing scene understanding dataset.
+    Used for adapting the primary vision-language model.
+  data_path: data/raw/bigearthnet/
+  processed_path: data/processed/bigearthnet/
+  manifest_path: data/manifests/bigearthnet_manifest.json
+  modalities: [optical_s2, sar_s1]
+  num_classes: 19
+  reference: "https://bigearth.net/"
+  license: Community Data License Agreement
+  stage: 2   # used in Stage 2 training
+
+# VQA / captioning evaluation
+vrsbench:
+  name: VRSBench
+  description: >
+    Visual Remote Sensing Benchmark for captioning,
+    grounding, and VQA evaluation.
+  data_path: data/raw/vrsbench/
+  processed_path: data/processed/vrsbench/
+  stage: 2
+  tasks: [caption, grounding, vqa]
+
+# Remote sensing VQA
+rsvqa:
+  name: RSVQA
+  description: >
+    Remote Sensing Visual Question Answering dataset.
+  data_path: data/raw/rsvqa/
+  processed_path: data/processed/rsvqa/
+  stage: 2
+  tasks: [vqa]
+
+# Change VQA
+cdvqa:
+  name: CDVQA
+  description: >
+    Change Detection Visual Question Answering dataset.
+    Used for bi-temporal change-based VQA.
+  data_path: data/raw/cdvqa/
+  processed_path: data/processed/cdvqa/
+  stage: 2
+  tasks: [change_vqa]
+
+# Sample/demo data (Stage 1)
+samples:
+  data_path: data/samples/
+  description: Small test images for smoke tests and demos.
+  formats: [tiff, geotiff, png, jpg]
