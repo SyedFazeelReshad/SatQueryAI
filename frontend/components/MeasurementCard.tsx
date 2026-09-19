@@ -1,38 +1,32 @@
-'use client';
+﻿'use client';
 
-import clsx from 'clsx';
-import { MeasurementResult } from '@/types/analysis';
-import { Ruler } from 'lucide-react';
+import React from 'react';
+import { Measurement } from '@/types/analysis';
 
-interface MeasurementCardProps {
-  measurement: MeasurementResult;
-}
-
-export default function MeasurementCard({ measurement }: MeasurementCardProps) {
-  const getBadgeStyle = (type: string) => {
-    const t = type.toUpperCase();
-    if (t === 'OBSERVED') return 'bg-blue-50 text-blue-700 border-blue-200';
-    if (t === 'DERIVED') return 'bg-emerald-50 text-emerald-700 border-emerald-200';
-    if (t === 'DETECTED') return 'bg-amber-50 text-amber-700 border-amber-200';
-    if (t === 'AI_DETECTED') return 'bg-purple-50 text-purple-700 border-purple-200';
-    if (t === 'INFERRED') return 'bg-orange-50 text-orange-700 border-orange-200';
-    if (t === 'SYNTHETIC') return 'bg-rose-50 text-rose-700 border-rose-200';
-    return 'bg-slate-100 text-slate-600 border-slate-200';
-  };
-
+export default function MeasurementCard({ measurement }: { measurement: Measurement }) {
   return (
-    <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col gap-3 hover:border-slate-300 transition-colors">
-      <div className="flex justify-between items-start gap-2">
-        <span className="text-sm font-medium text-slate-700">{measurement.label}</span>
-        <span className={clsx("text-[10px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider", getBadgeStyle(measurement.evidence_type))}>
-          {measurement.evidence_type}
+    <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800 hover:border-slate-700 transition-all shadow-sm">
+      <div className="flex items-center justify-between mb-1.5">
+        <span className="text-xs font-semibold text-slate-300">
+          {measurement.metric_name || (measurement as any).name || (measurement as any).label}
         </span>
+        {measurement.category && (
+          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950/60 text-cyan-400 border border-cyan-800/40 uppercase tracking-wider font-semibold">
+            {measurement.category}
+          </span>
+        )}
       </div>
-      <div className="flex items-baseline gap-1 mt-auto">
-        <span className="text-2xl font-bold text-slate-900">{measurement.value}</span>
-        <span className="text-sm text-slate-500 font-medium">{measurement.unit}</span>
+      <div className="flex items-baseline gap-1.5 mt-1">
+        <span className="text-2xl font-black tracking-tight text-white">{measurement.value}</span>
+        {measurement.unit && (
+          <span className="text-xs font-medium text-emerald-400">{measurement.unit}</span>
+        )}
       </div>
+      {measurement.interpretation && (
+        <p className="text-[11px] text-slate-400 mt-2 leading-relaxed border-t border-slate-800/60 pt-2">
+          {measurement.interpretation}
+        </p>
+      )}
     </div>
   );
 }
-

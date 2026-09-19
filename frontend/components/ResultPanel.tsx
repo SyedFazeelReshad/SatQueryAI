@@ -1,28 +1,24 @@
-'use client';
+﻿'use client';
 
-import { ReactNode } from 'react';
+import React from 'react';
 
 interface ResultPanelProps {
   title: string;
-  children: ReactNode;
-  icon?: ReactNode;
-  action?: ReactNode;
+  icon?: React.ReactNode;
+  children: React.ReactNode;
+  className?: string;
 }
 
-export default function ResultPanel({ title, children, icon, action }: ResultPanelProps) {
+export default function ResultPanel({ title, icon, children, className = '' }: ResultPanelProps) {
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-      <div className="px-6 py-4 border-b border-slate-200 bg-slate-50/80 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
-          {icon}
-          {title}
-        </h2>
-        {action && <div>{action}</div>}
+    <div className={`rounded-2xl bg-[#090f1f]/80 border border-slate-800/80 backdrop-blur-xl shadow-xl overflow-hidden ${className}`}>
+      {/* Sleek Dark Header */}
+      <div className="flex items-center gap-2.5 px-6 py-4 bg-[#0d162d]/90 border-b border-slate-800/80">
+        {icon && <span className="text-emerald-400">{icon}</span>}
+        <h2 className="text-sm sm:text-base font-bold text-white tracking-wide">{title}</h2>
       </div>
-      <div className="p-6">
-        {children}
-      </div>
+      {/* Body */}
+      <div className="p-6">{children}</div>
     </div>
   );
 }
-

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useRef } from 'react';
 import { Layers, Eye, EyeOff, Crosshair, ZoomIn, ZoomOut, RotateCcw, ArrowLeftRight } from 'lucide-react';
@@ -80,12 +80,12 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
 
   const layerLabels: Record<string, string> = {
     preview: 'True Color (RGB)',
-    before: '📷 Before (T1)',
-    after: '📷 After (T2)',
-    builtup: '🏙️ Built-up Highlight',
-    ndwi: '🌊 Water Highlight',
-    ndvi: '🌿 Vegetation Highlight',
-    overlay: '🗺️ Land Cover Map',
+    before: 'ðŸ“· Before (T1)',
+    after: 'ðŸ“· After (T2)',
+    builtup: 'ðŸ™ï¸ Built-up Highlight',
+    ndwi: 'ðŸŒŠ Water Highlight',
+    ndvi: 'ðŸŒ¿ Vegetation Highlight',
+    overlay: 'ðŸ—ºï¸ Land Cover Map',
     change: 'Bi-Temporal Change Mask',
   };
 
@@ -96,19 +96,19 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
     return path.startsWith('http') ? path : `${apiUrl}${path}`;
   };
 
-  // ─── DUAL IMAGE LAYOUT ───────────────────────────────────────────────
+  // â”€â”€â”€ DUAL IMAGE LAYOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (isDualImage) {
     const beforeUrl = getFullUrl(previewUrl);
     const afterUrl = getFullUrl(previewBUrl);
     const changeLayerUrl = getFullUrl(activeLayersMap['change'] || overlayUrl);
 
     return (
-      <div className="flex flex-col bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+      <div className="flex flex-col bg-slate-900/80 border border-slate-800 rounded-xl overflow-hidden shadow-sm">
         {/* Top Toolbar */}
-        <div className="flex flex-wrap items-center justify-between px-4 py-2.5 bg-slate-50 border-b border-slate-200 text-xs gap-2">
+        <div className="flex flex-wrap items-center justify-between px-4 py-2.5 bg-slate-50 border-b border-slate-800 text-xs gap-2">
           <div className="flex items-center gap-2">
             <ArrowLeftRight className="w-4 h-4 text-emerald-600" />
-            <span className="font-semibold text-slate-700">Change Analysis View:</span>
+            <span className="font-semibold text-slate-300">Change Analysis View:</span>
             <div className="flex gap-1">
               {(['split', 'before', 'after', 'change'] as const).map((m) => (
                 <button
@@ -117,24 +117,24 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
                   className={`px-2.5 py-1 rounded transition-colors text-[11px] font-medium capitalize ${
                     dualMode === m
                       ? 'bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-sm'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                      : 'text-slate-600 hover:text-white hover:bg-slate-200/60'
                   }`}
                 >
-                  {m === 'split' ? '⬛ Side by Side' : m === 'before' ? '📷 Before (T1)' : m === 'after' ? '📷 After (T2)' : '🔴 Change Mask'}
+                  {m === 'split' ? 'â¬› Side by Side' : m === 'before' ? 'ðŸ“· Before (T1)' : m === 'after' ? 'ðŸ“· After (T2)' : 'ðŸ”´ Change Mask'}
                 </button>
               ))}
             </div>
           </div>
 
           {/* Zoom controls */}
-          <div className="flex items-center space-x-1 border-l border-slate-200 pl-3">
-            <button onClick={() => setZoom((z) => Math.min(2.5, z + 0.25))} className="p-1 hover:bg-slate-200/60 rounded text-slate-600 hover:text-slate-900" title="Zoom In">
+          <div className="flex items-center space-x-1 border-l border-slate-800 pl-3">
+            <button onClick={() => setZoom((z) => Math.min(2.5, z + 0.25))} className="p-1 hover:bg-slate-200/60 rounded text-slate-600 hover:text-white" title="Zoom In">
               <ZoomIn className="w-3.5 h-3.5" />
             </button>
-            <button onClick={() => setZoom((z) => Math.max(1.0, z - 0.25))} className="p-1 hover:bg-slate-200/60 rounded text-slate-600 hover:text-slate-900" title="Zoom Out">
+            <button onClick={() => setZoom((z) => Math.max(1.0, z - 0.25))} className="p-1 hover:bg-slate-200/60 rounded text-slate-600 hover:text-white" title="Zoom Out">
               <ZoomOut className="w-3.5 h-3.5" />
             </button>
-            <button onClick={() => setZoom(1.0)} className="p-1 hover:bg-slate-200/60 rounded text-slate-600 hover:text-slate-900" title="Reset Zoom">
+            <button onClick={() => setZoom(1.0)} className="p-1 hover:bg-slate-200/60 rounded text-slate-600 hover:text-white" title="Reset Zoom">
               <RotateCcw className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -157,7 +157,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
               {/* Before panel */}
               <div className="flex-1 relative flex flex-col items-center">
                 <div className="absolute top-2 left-2 z-10 bg-slate-900/80 text-emerald-300 text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 backdrop-blur-sm">
-                  📷 BEFORE (T1)
+                  ðŸ“· BEFORE (T1)
                 </div>
                 {beforeUrl ? (
                   <img
@@ -176,7 +176,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
               {/* After panel */}
               <div className="flex-1 relative flex flex-col items-center">
                 <div className="absolute top-2 left-2 z-10 bg-slate-900/80 text-amber-300 text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 backdrop-blur-sm">
-                  📷 AFTER (T2)
+                  ðŸ“· AFTER (T2)
                 </div>
                 {afterUrl ? (
                   <img
@@ -193,7 +193,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
             // Before only
             <div style={{ transform: `scale(${zoom})`, transformOrigin: 'center center' }} className="relative transition-transform duration-150">
               <div className="absolute top-2 left-2 z-10 bg-slate-900/80 text-emerald-300 text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 backdrop-blur-sm">
-                📷 BEFORE (T1)
+                ðŸ“· BEFORE (T1)
               </div>
               <img src={beforeUrl} alt="Before (T1)" className="max-h-[500px] w-auto object-contain block" />
             </div>
@@ -201,7 +201,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
             // After only
             <div style={{ transform: `scale(${zoom})`, transformOrigin: 'center center' }} className="relative transition-transform duration-150">
               <div className="absolute top-2 left-2 z-10 bg-slate-900/80 text-amber-300 text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 backdrop-blur-sm">
-                📷 AFTER (T2)
+                ðŸ“· AFTER (T2)
               </div>
               <img src={afterUrl} alt="After (T2)" className="max-h-[500px] w-auto object-contain block" />
             </div>
@@ -209,7 +209,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
             // Change mask overlaid on After
             <div style={{ transform: `scale(${zoom})`, transformOrigin: 'center center' }} className="relative transition-transform duration-150">
               <div className="absolute top-2 left-2 z-10 bg-slate-900/80 text-red-300 text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 backdrop-blur-sm">
-                🔴 CHANGE MASK (CVA + Otsu)
+                ðŸ”´ CHANGE MASK (CVA + Otsu)
               </div>
               <img src={afterUrl} alt="After (T2) base" className="max-h-[500px] w-auto object-contain block" />
               {changeLayerUrl && (
@@ -246,10 +246,10 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
         </div>
 
         {/* Footer legend */}
-        <div className="px-4 py-2 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
+        <div className="px-4 py-2 bg-slate-50 border-t border-slate-800 flex items-center justify-between text-xs text-slate-600">
           <div>
             Dual Image Change Analysis &mdash;{' '}
-            <span className="text-slate-900 font-semibold">
+            <span className="text-white font-semibold">
               {dualMode === 'split' ? 'Side-by-Side Comparison' : dualMode === 'before' ? 'Before Image (T1)' : dualMode === 'after' ? 'After Image (T2)' : 'Change Mask (CVA + Otsu)'}
             </span>
           </div>
@@ -262,15 +262,15 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
     );
   }
 
-  // ─── SINGLE IMAGE LAYOUT (unchanged) ─────────────────────────────────
+  // â”€â”€â”€ SINGLE IMAGE LAYOUT (unchanged) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   return (
-    <div className="flex flex-col bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+    <div className="flex flex-col bg-slate-900/80 border border-slate-800 rounded-xl overflow-hidden shadow-sm">
       {/* Top Toolbar */}
-      <div className="flex flex-wrap items-center justify-between px-4 py-2.5 bg-slate-50 border-b border-slate-200 text-xs">
+      <div className="flex flex-wrap items-center justify-between px-4 py-2.5 bg-slate-50 border-b border-slate-800 text-xs">
         {/* Layer Selector */}
         <div className="flex items-center space-x-2">
           <Layers className="w-4 h-4 text-emerald-600" />
-          <span className="font-semibold text-slate-700">Layer:</span>
+          <span className="font-semibold text-slate-300">Layer:</span>
           <div className="flex flex-wrap gap-1">
             {layerKeys.map((k) => (
               <button
@@ -279,7 +279,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
                 className={`px-2.5 py-1 rounded transition-colors ${
                   selectedLayer === k
                     ? 'bg-emerald-50 text-emerald-800 border border-emerald-300 font-medium shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                    : 'text-slate-600 hover:text-white hover:bg-slate-200/60'
                 }`}
               >
                 {layerLabels[k] || k.toUpperCase()}
@@ -302,7 +302,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
                 onChange={(e) => setOverlayOpacity(parseFloat(e.target.value))}
                 className="w-20 accent-emerald-600 cursor-pointer"
               />
-              <span className="text-slate-700 w-8 text-right font-mono text-[11px]">
+              <span className="text-slate-300 w-8 text-right font-mono text-[11px]">
                 {Math.round(overlayOpacity * 100)}%
               </span>
             </div>
@@ -314,7 +314,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
               className={`flex items-center space-x-1 px-2.5 py-1 rounded border transition-colors ${
                 showDetections
                   ? 'bg-indigo-50 text-indigo-700 border-indigo-200 font-medium'
-                  : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
+                  : 'bg-slate-900/80 text-slate-600 border-slate-800 hover:bg-slate-100'
               }`}
             >
               {showDetections ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
@@ -323,24 +323,24 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
           )}
 
           {/* Zoom controls */}
-          <div className="flex items-center space-x-1 border-l border-slate-200 pl-3">
+          <div className="flex items-center space-x-1 border-l border-slate-800 pl-3">
             <button
               onClick={() => setZoom((z) => Math.min(2.5, z + 0.25))}
-              className="p-1 hover:bg-slate-200/60 rounded text-slate-600 hover:text-slate-900"
+              className="p-1 hover:bg-slate-200/60 rounded text-slate-600 hover:text-white"
               title="Zoom In"
             >
               <ZoomIn className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={() => setZoom((z) => Math.max(1.0, z - 0.25))}
-              className="p-1 hover:bg-slate-200/60 rounded text-slate-600 hover:text-slate-900"
+              className="p-1 hover:bg-slate-200/60 rounded text-slate-600 hover:text-white"
               title="Zoom Out"
             >
               <ZoomOut className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={() => setZoom(1.0)}
-              className="p-1 hover:bg-slate-200/60 rounded text-slate-600 hover:text-slate-900"
+              className="p-1 hover:bg-slate-200/60 rounded text-slate-600 hover:text-white"
               title="Reset Zoom"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -434,9 +434,9 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
       </div>
 
       {/* Layer legend footer */}
-      <div className="px-4 py-2 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
+      <div className="px-4 py-2 bg-slate-50 border-t border-slate-800 flex items-center justify-between text-xs text-slate-600">
         <div>
-          Active view: <span className="text-slate-900 font-semibold">{layerLabels[selectedLayer] || selectedLayer}</span>
+          Active view: <span className="text-white font-semibold">{layerLabels[selectedLayer] || selectedLayer}</span>
         </div>
         {selectedLayer === 'ndvi' && (
           <div className="flex items-center space-x-2 text-[11px]">
@@ -455,3 +455,4 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
     </div>
   );
 };
+

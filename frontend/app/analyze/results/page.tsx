@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -16,30 +16,29 @@ import ReportDownload from '@/components/ReportDownload';
 import ResultPanel from '@/components/ResultPanel';
 import { AnalysisResult, DetectionResult } from '@/types/analysis';
 import { getResult } from '@/lib/api';
-import { AlertCircle, Loader2, RefreshCcw, ArrowLeft, MessageSquare, Sparkles } from 'lucide-react';
+import { AlertCircle, Loader2, RefreshCcw, ArrowLeft, MessageSquare } from 'lucide-react';
 
-/** Renders markdown content with GFM (tables, bold, lists, headings). */
 function MarkdownAnswer({ content }: { content: string }) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
       components={{
-        h2: ({ children }) => <h2 className="text-base font-bold text-slate-900 mt-4 mb-1 border-b border-slate-200 pb-1">{children}</h2>,
-        h3: ({ children }) => <h3 className="text-sm font-semibold text-slate-800 mt-3 mb-1">{children}</h3>,
-        strong: ({ children }) => <strong className="font-semibold text-slate-900">{children}</strong>,
-        p: ({ children }) => <p className="text-sm text-slate-700 leading-relaxed mb-2">{children}</p>,
-        li: ({ children }) => <li className="text-sm text-slate-700 ml-4 list-disc mb-0.5">{children}</li>,
+        h2: ({ children }) => <h2 className="text-base font-bold text-white mt-4 mb-2 border-b border-slate-700 pb-1">{children}</h2>,
+        h3: ({ children }) => <h3 className="text-sm font-semibold text-emerald-400 mt-3 mb-1">{children}</h3>,
+        strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
+        p: ({ children }) => <p className="text-sm text-slate-200 leading-relaxed mb-2">{children}</p>,
+        li: ({ children }) => <li className="text-sm text-slate-200 ml-4 list-disc mb-0.5">{children}</li>,
         table: ({ children }) => (
-          <div className="overflow-x-auto my-3">
-            <table className="min-w-full text-xs border border-slate-200 rounded-lg overflow-hidden">{children}</table>
+          <div className="overflow-x-auto my-3 border border-slate-700 rounded-lg">
+            <table className="min-w-full text-xs text-slate-200">{children}</table>
           </div>
         ),
-        thead: ({ children }) => <thead className="bg-slate-100 text-slate-700 font-medium">{children}</thead>,
-        tbody: ({ children }) => <tbody className="divide-y divide-slate-100">{children}</tbody>,
-        tr: ({ children }) => <tr className="hover:bg-slate-50">{children}</tr>,
-        th: ({ children }) => <th className="px-3 py-2 text-left font-semibold text-slate-800">{children}</th>,
-        td: ({ children }) => <td className="px-3 py-2 text-slate-700">{children}</td>,
-        hr: () => <hr className="my-3 border-slate-200" />,
+        thead: ({ children }) => <thead className="bg-slate-800 text-white font-semibold">{children}</thead>,
+        tbody: ({ children }) => <tbody className="divide-y divide-slate-800">{children}</tbody>,
+        tr: ({ children }) => <tr className="hover:bg-slate-800/50">{children}</tr>,
+        th: ({ children }) => <th className="px-3 py-2 text-left font-semibold text-white">{children}</th>,
+        td: ({ children }) => <td className="px-3 py-2 text-slate-200">{children}</td>,
+        hr: () => <hr className="my-3 border-slate-700" />,
       }}
     >
       {content}
@@ -80,22 +79,22 @@ function ResultsContent() {
 
   if (loading) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center text-gray-400 gap-4 py-20">
+      <div className="flex-1 flex flex-col items-center justify-center text-slate-300 gap-4 py-32">
         <Loader2 className="w-8 h-8 animate-spin text-emerald-400" />
-        <p>Retrieving analysis results...</p>
+        <p className="text-sm font-medium">Retrieving analysis results...</p>
       </div>
     );
   }
 
   if (error || !result) {
     return (
-      <div className="flex-1 flex items-center justify-center p-4 py-20">
-        <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-6 rounded-xl max-w-md w-full text-center space-y-4">
-          <AlertCircle className="w-8 h-8 mx-auto" />
-          <p>{error || 'Result not found'}</p>
+      <div className="flex-1 flex items-center justify-center p-4 py-32">
+        <div className="bg-red-500/10 border border-red-500/30 text-red-300 p-6 rounded-xl max-w-md w-full text-center space-y-4">
+          <AlertCircle className="w-8 h-8 mx-auto text-red-400" />
+          <p className="text-sm">{error || 'Result not found'}</p>
           <Link
             href="/analyze"
-            className="inline-block mt-4 text-white bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded border border-slate-700"
+            className="inline-block mt-4 text-white bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg border border-slate-700 text-xs font-semibold"
           >
             Go Back
           </Link>
@@ -107,22 +106,22 @@ function ResultsContent() {
   return (
     <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-8 md:py-12 space-y-8">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-slate-800 pb-6">
         <div className="space-y-2">
           <Link
             href="/analyze"
-            className="text-sm text-slate-500 hover:text-slate-900 flex items-center gap-1 mb-2 w-fit transition-colors"
+            className="text-xs text-slate-400 hover:text-white flex items-center gap-1 mb-2 w-fit transition-colors font-medium"
           >
-            <ArrowLeft className="w-4 h-4" /> Back to Analysis
+            <ArrowLeft className="w-3.5 h-3.5" /> Back to Analysis
           </Link>
           <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Analysis Report</h1>
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-medium">
+            <h1 className="text-3xl font-extrabold text-white tracking-tight">Analysis Report</h1>
+            <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold">
               Stage 3 Multi-Modal
             </span>
           </div>
           <div className="flex items-center gap-3 pt-1">
-            <span className="text-xs font-mono text-slate-600 bg-white border border-slate-200 px-2.5 py-1 rounded shadow-sm">
+            <span className="text-xs font-mono text-slate-300 bg-slate-900 border border-slate-800 px-2.5 py-1 rounded">
               Session: {sessionId}
             </span>
             <ConfidenceBadge score={result.confidence} level={result.confidence_level} />
@@ -133,21 +132,21 @@ function ResultsContent() {
           <ReportDownload sessionId={result.session_id} urls={result.report_urls} />
           <Link
             href="/analyze"
-            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-md shadow-emerald-600/20"
+            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-md shadow-emerald-900/40"
           >
-            <RefreshCcw className="w-4 h-4" />
+            <RefreshCcw className="w-3.5 h-3.5" />
             New Analysis
           </Link>
         </div>
       </div>
 
-      {/* Warnings Banner if any */}
+      {/* Observation Warnings */}
       {result.warnings.length > 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-amber-800 flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-amber-600" />
+        <div className="bg-amber-950/40 border border-amber-500/40 rounded-xl p-4 text-amber-200 flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-amber-400" />
           <div className="space-y-1 text-sm">
-            <p className="font-semibold text-amber-900">Observation Warnings</p>
-            <ul className="list-disc list-inside space-y-0.5 text-xs text-amber-800">
+            <p className="font-bold text-amber-300">Observation Warnings</p>
+            <ul className="list-disc list-inside space-y-0.5 text-xs text-amber-200/90">
               {result.warnings.map((w, i) => (
                 <li key={i}>{w}</li>
               ))}
@@ -157,25 +156,18 @@ function ResultsContent() {
       )}
 
       {/* Main Analysis Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Column (Left 2 cols) */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        {/* Main Column */}
         <div className="lg:col-span-2 space-y-8">
-          {/* VLM Synthesized Answer */}
           <ResultPanel
             title="Analysis Interpretation"
-            icon={<MessageSquare className="w-5 h-5 text-emerald-600" />}
+            icon={<MessageSquare className="w-5 h-5 text-emerald-400" />}
           >
-            <div className="prose prose-slate prose-sm max-w-none text-slate-800 leading-relaxed
-              prose-headings:text-slate-900 prose-headings:font-bold
-              prose-h2:text-base prose-h3:text-sm
-              prose-strong:text-slate-900
-              prose-table:text-xs prose-td:py-1 prose-th:py-1
-              prose-li:text-slate-700">
+            <div className="prose prose-invert max-w-none text-slate-200 leading-relaxed">
               <MarkdownAnswer content={result.answer} />
             </div>
           </ResultPanel>
 
-          {/* Interactive Multi-Layer Visualizer */}
           <ResultPanel title="Multi-Layer Imagery & Visualizer">
             <InteractiveVisualizer
               previewUrl={result.preview_url}
@@ -186,14 +178,13 @@ function ResultsContent() {
               onSelectDetection={(det) => setSelectedDetection(det)}
             />
             {selectedDetection && (
-              <div className="mt-3 p-3 rounded-lg bg-indigo-50 border border-indigo-200 text-xs text-indigo-900 flex items-center justify-between">
+              <div className="mt-3 p-3 rounded-lg bg-indigo-950/50 border border-indigo-500/30 text-xs text-indigo-300 flex items-center justify-between">
                 <span>
-                  Selected Object: <strong>{selectedDetection.label}</strong> (Confidence:{' '}
-                  {Math.round(selectedDetection.score * 100)}%)
+                  Selected Object: <strong className="text-white">{selectedDetection.label}</strong> (Confidence: {Math.round(selectedDetection.score * 100)}%)
                 </span>
                 <button
                   onClick={() => setSelectedDetection(null)}
-                  className="text-[11px] underline hover:text-indigo-950 font-medium"
+                  className="text-[11px] underline hover:text-white"
                 >
                   Clear Selection
                 </button>
@@ -201,17 +192,13 @@ function ResultsContent() {
             )}
           </ResultPanel>
 
-
-          {/* Conversational Follow-Up Exploration */}
           <FollowUpChat sessionId={result.session_id} />
 
-          {/* Evidence Verification Panel */}
           <EvidencePanel evidenceIds={result.evidence_ids} />
         </div>
 
-        {/* Side Column (Right 1 col) */}
-        <div className="space-y-8">
-          {/* Measurements Card */}
+        {/* Side Column */}
+        <div className="lg:col-span-1 space-y-8">
           {result.measurements.length > 0 && (
             <ResultPanel title="Deterministic Measurements">
               <div className="space-y-3">
@@ -222,7 +209,6 @@ function ResultsContent() {
             </ResultPanel>
           )}
 
-          {/* Execution Trace DAG */}
           <ExecutionTracePanel traceId={result.execution_trace_id} />
         </div>
       </div>
@@ -232,19 +218,20 @@ function ResultsContent() {
 
 export default function ResultsPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-900">
+    <div className="results-page min-h-screen flex flex-col bg-[#020612] text-white">
       <Navbar />
-
-      <Suspense
-        fallback={
-          <div className="flex-1 flex flex-col items-center justify-center text-gray-400 gap-4 py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-emerald-400" />
-            <p>Loading results...</p>
-          </div>
-        }
-      >
-        <ResultsContent />
-      </Suspense>
+      <div className="pt-16">
+        <Suspense
+          fallback={
+            <div className="flex-1 flex flex-col items-center justify-center text-slate-400 gap-4 py-32">
+              <Loader2 className="w-8 h-8 animate-spin text-emerald-400" />
+              <p className="text-sm">Loading results...</p>
+            </div>
+          }
+        >
+          <ResultsContent />
+        </Suspense>
+      </div>
     </div>
   );
 }

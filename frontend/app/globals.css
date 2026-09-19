@@ -1,33 +1,60 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: light;
+html {
+  color-scheme: dark;
 }
 
 body {
-  background-color: #f8fafc;
-  color: #0f172a;
-  overflow-x: hidden;
+  background-color: #020612;
+  color: #f8fafc;
 }
 
-/* Custom light scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* ===================================================
+   RESULTS PAGE ONLY - DARK COSMIC THEME FOR ALL BOXES
+   =================================================== */
+.results-page .bg-white {
+  background-color: rgba(13, 22, 45, 0.75) !important;
+  border-color: rgba(30, 41, 59, 0.8) !important;
+  color: #f8fafc !important;
+  backdrop-filter: blur(12px);
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f5f9; 
+.results-page .bg-slate-50,
+.results-page .bg-slate-100,
+.results-page .bg-gray-50,
+.results-page .bg-gray-100 {
+  background-color: rgba(6, 12, 26, 0.6) !important;
+  border-color: rgba(30, 41, 59, 0.7) !important;
+  color: #cbd5e1 !important;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1; 
-  border-radius: 4px;
+.results-page .text-slate-900,
+.results-page .text-slate-800 {
+  color: #f8fafc !important;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8; 
+.results-page .text-slate-700,
+.results-page .text-slate-600 {
+  color: #94a3b8 !important;
 }
 
+.results-page .text-slate-500 {
+  color: #64748b !important;
+}
+
+.results-page .border-slate-200,
+.results-page .border-slate-100 {
+  border-color: rgba(30, 41, 59, 0.8) !important;
+}
+
+.results-page input {
+  background-color: rgba(6, 12, 26, 0.8) !important;
+  border-color: rgba(30, 41, 59, 0.9) !important;
+  color: #ffffff !important;
+}
+
+.results-page input::placeholder {
+  color: #64748b !important;
+}
