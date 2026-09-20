@@ -31,11 +31,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#020612] via-transparent to-[#020612]/70 pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-950/40 text-cyan-400 text-xs font-semibold backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.25)]">
-            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-            <span>Student Innovation Project • Smart India Hackathon (SIH26167)</span>
-          </div>
-
+        
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.1]">
             <span className="text-white block">Every satellite pixel holds</span>
             <span className="block bg-gradient-to-r from-cyan-300 via-teal-300 to-emerald-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(6,182,212,0.5)]">

@@ -10,6 +10,7 @@ interface ConfidenceBadgeProps {
 }
 
 export default function ConfidenceBadge({ score, level, basis }: ConfidenceBadgeProps) {
+  return null;
   const getStyle = () => {
     if (!score) return "bg-slate-100 text-slate-700 border-slate-300";
     if (score >= 0.8) return "bg-emerald-50 text-emerald-700 border-emerald-200";

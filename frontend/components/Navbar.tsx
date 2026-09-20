@@ -28,7 +28,6 @@ export default function Navbar() {
           href="/analyze"
           className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-bold text-xs shadow-md shadow-emerald-500/20 hover:scale-105 transition-all"
         >
-          <Sparkles className="w-3.5 h-3.5" />
           <span>Analyze Scene</span>
         </Link>
       </div>
