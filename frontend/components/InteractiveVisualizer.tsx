@@ -80,13 +80,13 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
 
   const layerLabels: Record<string, string> = {
     preview: 'True Color (RGB)',
-    before: 'ðŸ“· Before (T1)',
-    after: 'ðŸ“· After (T2)',
+    before: ' ■ Before (T1)',
+    after: ' ■ After (T2)',
     builtup: 'ðŸ™ï¸ Built-up Highlight',
     ndwi: 'ðŸŒŠ Water Highlight',
     ndvi: 'ðŸŒ¿ Vegetation Highlight',
     overlay: 'ðŸ—ºï¸ Land Cover Map',
-    change: 'Bi-Temporal Change Mask',
+    change: 'Bi-Temporal ● Change Mask',
   };
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -96,7 +96,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
     return path.startsWith('http') ? path : `${apiUrl}${path}`;
   };
 
-  // â”€â”€â”€ DUAL IMAGE LAYOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€”€ DUAL IMAGE LAYOUT ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
   if (isDualImage) {
     const beforeUrl = getFullUrl(previewUrl);
     const afterUrl = getFullUrl(previewBUrl);
@@ -120,7 +120,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
                       : 'text-slate-600 hover:text-white hover:bg-slate-200/60'
                   }`}
                 >
-                  {m === 'split' ? 'â¬› Side by Side' : m === 'before' ? 'ðŸ“· Before (T1)' : m === 'after' ? 'ðŸ“· After (T2)' : 'ðŸ”´ Change Mask'}
+                  {m === 'split' ? ' ■ Side By Side' : m === 'before' ? ' ■ Before (T1)' : m === 'after' ? ' ■ After (T2)' : ' ● Change Mask'}
                 </button>
               ))}
             </div>
@@ -157,12 +157,12 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
               {/* Before panel */}
               <div className="flex-1 relative flex flex-col items-center">
                 <div className="absolute top-2 left-2 z-10 bg-slate-900/80 text-emerald-300 text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 backdrop-blur-sm">
-                  ðŸ“· BEFORE (T1)
+                   ■ Before (T1)
                 </div>
                 {beforeUrl ? (
                   <img
                     src={beforeUrl}
-                    alt="Before (T1)"
+                    alt="■ Before (T1)"
                     className="max-h-[500px] w-full object-contain block"
                   />
                 ) : (
@@ -176,12 +176,12 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
               {/* After panel */}
               <div className="flex-1 relative flex flex-col items-center">
                 <div className="absolute top-2 left-2 z-10 bg-slate-900/80 text-amber-300 text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 backdrop-blur-sm">
-                  ðŸ“· AFTER (T2)
+                   ■ After (T2)
                 </div>
                 {afterUrl ? (
                   <img
                     src={afterUrl}
-                    alt="After (T2)"
+                    alt="■ After (T2)"
                     className="max-h-[500px] w-full object-contain block"
                   />
                 ) : (
@@ -193,25 +193,25 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
             // Before only
             <div style={{ transform: `scale(${zoom})`, transformOrigin: 'center center' }} className="relative transition-transform duration-150">
               <div className="absolute top-2 left-2 z-10 bg-slate-900/80 text-emerald-300 text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 backdrop-blur-sm">
-                ðŸ“· BEFORE (T1)
+                 ■ Before (T1)
               </div>
-              <img src={beforeUrl} alt="Before (T1)" className="max-h-[500px] w-auto object-contain block" />
+              <img src={beforeUrl} alt="■ Before (T1)" className="max-h-[500px] w-auto object-contain block" />
             </div>
           ) : dualMode === 'after' ? (
             // After only
             <div style={{ transform: `scale(${zoom})`, transformOrigin: 'center center' }} className="relative transition-transform duration-150">
               <div className="absolute top-2 left-2 z-10 bg-slate-900/80 text-amber-300 text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 backdrop-blur-sm">
-                ðŸ“· AFTER (T2)
+                 ■ After (T2)
               </div>
-              <img src={afterUrl} alt="After (T2)" className="max-h-[500px] w-auto object-contain block" />
+              <img src={afterUrl} alt="■ After (T2)" className="max-h-[500px] w-auto object-contain block" />
             </div>
           ) : (
-            // Change mask overlaid on After
+            // ● Change Mask overlaid on After
             <div style={{ transform: `scale(${zoom})`, transformOrigin: 'center center' }} className="relative transition-transform duration-150">
               <div className="absolute top-2 left-2 z-10 bg-slate-900/80 text-red-300 text-[11px] font-bold px-2 py-0.5 rounded border border-slate-700 backdrop-blur-sm">
-                ðŸ”´ CHANGE MASK (CVA + Otsu)
+                 ● Change Mask (CVA + Otsu)
               </div>
-              <img src={afterUrl} alt="After (T2) base" className="max-h-[500px] w-auto object-contain block" />
+              <img src={afterUrl} alt="■ After (T2) base" className="max-h-[500px] w-auto object-contain block" />
               {changeLayerUrl && (
                 <img
                   src={changeLayerUrl}
@@ -220,7 +220,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
                   className="absolute inset-0 w-full h-full object-contain pointer-events-none transition-opacity duration-150"
                 />
               )}
-              {/* Opacity control for change mask */}
+              {/* Opacity control for ● Change Mask */}
               <div className="absolute bottom-2 left-2 flex items-center gap-2 bg-slate-900/80 px-2 py-1 rounded border border-slate-700 text-[11px] text-slate-300">
                 <span>Opacity:</span>
                 <input
@@ -250,7 +250,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
           <div>
             Dual Image Change Analysis &mdash;{' '}
             <span className="text-white font-semibold">
-              {dualMode === 'split' ? 'Side-by-Side Comparison' : dualMode === 'before' ? 'Before Image (T1)' : dualMode === 'after' ? 'After Image (T2)' : 'Change Mask (CVA + Otsu)'}
+              {dualMode === 'split' ? 'Side-by-Side Comparison' : dualMode === 'before' ? 'Before Image (T1)' : dualMode === 'after' ? 'After Image (T2)' : '● Change Mask (CVA + Otsu)'}
             </span>
           </div>
           <div className="flex items-center space-x-2 text-[11px]">
@@ -262,7 +262,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
     );
   }
 
-  // â”€â”€â”€ SINGLE IMAGE LAYOUT (unchanged) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ”€”€”€ SINGLE IMAGE LAYOUT (unchanged) ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
   return (
     <div className="flex flex-col bg-slate-900/80 border border-slate-800 rounded-xl overflow-hidden shadow-sm">
       {/* Top Toolbar */}
@@ -455,4 +455,6 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
     </div>
   );
 };
+
+
 

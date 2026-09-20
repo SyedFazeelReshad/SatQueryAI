@@ -19,6 +19,41 @@ import { getResult } from '@/lib/api';
 import { AlertCircle, Loader2, RefreshCcw, ArrowLeft, MessageSquare } from 'lucide-react';
 
 function MarkdownAnswer({ content }: { content: string }) {
+  
+  const downloadJSON = () => {
+    if (!result) return;
+    const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `SatQuery_${sessionId || 'report'}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const downloadMarkdown = () => {
+    if (!result) return;
+    let md = `# SatQuery AI Analysis Report\n\n`;
+    md += `**Session ID:** ${sessionId || 'N/A'}\n`;
+    md += `**Task Type:** ${result.task_type || 'Change Analysis'}\n\n`;
+    md += `## Interpretation\n${result.answer || ''}\n\n`;
+    md += `## Deterministic Measurements\n`;
+    (result.measurements || []).forEach(m => {
+      md += `- **${m.label}:** ${m.value} ${m.unit || ''} (${m.evidence_type || 'DERIVED'})\n`;
+    });
+    if (result.warnings && result.warnings.length) {
+      md += `\n## Warnings\n`;
+      result.warnings.forEach(w => { md += `- ${w}\n`; });
+    }
+    const blob = new Blob([md], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `SatQuery_${sessionId || 'report'}.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
@@ -129,7 +164,7 @@ function ResultsContent() {
         </div>
 
         <div className="flex items-center gap-3">
-          <ReportDownload sessionId={result.session_id} urls={result.report_urls} />
+          <ReportDownload sessionId={result.session_id} urls={result.report_urls}  result={result} />
           <Link
             href="/analyze"
             className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-md shadow-emerald-900/40"

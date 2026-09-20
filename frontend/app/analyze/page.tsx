@@ -206,9 +206,9 @@ export default function AnalyzePage() {
               {/* Image Input 2 */}
               {tab !== 'single_image' && (
                 <div>
-                  <label className="text-xs font-semibold text-slate-300 mb-2 block">
-                    {tab === 'change_analysis' ? 'After (Date 2) Scene' : 'SAR Radar Scene (Backscatter)'}
-                  </label>
+{/* removed label */}
+
+
                   {file2 ? (
                     <div className="flex flex-col items-center justify-center p-8 rounded-xl border border-emerald-500/30 bg-slate-950/40 relative">
                       <button
