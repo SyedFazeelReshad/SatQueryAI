@@ -33,15 +33,7 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
   }
 
   const layerKeys = Object.keys(activeLayersMap);
-  const [selectedLayer, setSelectedLayer] = useState<string>(() => {
-    if (isDualImage) return 'change';
-    if (layerKeys.includes('change')) return 'change';
-    if (layerKeys.includes('builtup')) return 'builtup';
-    if (layerKeys.includes('ndwi')) return 'ndwi';
-    if (layerKeys.includes('overlay')) return 'overlay';
-    if (layerKeys.includes('ndvi')) return 'ndvi';
-    return 'preview';
-  });
+const [selectedLayer, setSelectedLayer] = useState<string>('preview');
 
   // Keep selected layer updated if layers are populated asynchronously
   React.useEffect(() => {
@@ -80,12 +72,12 @@ export const InteractiveVisualizer: React.FC<InteractiveVisualizerProps> = ({
 
   const layerLabels: Record<string, string> = {
     preview: 'True Color (RGB)',
-    before: ' ■ Before (T1)',
-    after: ' ■ After (T2)',
-    builtup: 'ðŸ™ï¸ Built-up Highlight',
-    ndwi: 'ðŸŒŠ Water Highlight',
-    ndvi: 'ðŸŒ¿ Vegetation Highlight',
-    overlay: 'ðŸ—ºï¸ Land Cover Map',
+    before: '■ Before (T1)',
+    after: '■ After (T2)',
+    builtup: '🏗️ Built-up Highlight',
+    ndwi: '🌊 Water Highlight',
+    ndvi: '🌱 Vegetation Highlight',
+    overlay: '🗺️ Land Cover Map',
     change: 'Bi-Temporal ● Change Mask',
   };
 
