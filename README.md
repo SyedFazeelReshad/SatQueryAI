@@ -1,4 +1,4 @@
-
+<img width="1919" height="700" alt="image" src="https://github.com/user-attachments/assets/3b97eced-db40-4773-bbae-eb91512afb9c" />
 # SatQuery AI 🛰️
 
 > **Multimodal Geospatial & Satellite Image Analysis Engine**  
@@ -44,11 +44,12 @@ flowchart TD
 
 ## 🚀 Key Features
 
-* **Multispectral & Optical Processing:** Automated extraction of land cover fractions (Vegetation, Built-up Proxy, Water, Bare Soil) using spectral indices.
-* **Multimodal Visual Grounding:** Integrates visual-language capabilities for natural follow-up inspection and object localization within scenes.
-* **Audit-Grade Evidence Tracking:** Generates structured session records and confidence metrics for geospatial verifiability.
-* **Flexible Report Exporting:** Instant generation of executive reports in Markdown (`.md`), structured JSON, and client-side printable formats.
-* **Modern Geospatial Dashboard:** High-contrast, responsive dark UI built with Next.js and Tailwind CSS.
+* **Zero-Hallucination Design:** All physical quantities (percentages, surface areas, index averages) are computed by mathematical raster algorithms before the language model sees the prompt.
+* **Hierarchical RGB Water Detection:** Solves the failure of traditional NDWI on 3-band RGB imagery (which lacks a true Near-Infrared band). Combines HSV spectral filtering (Hue 62°–145°), normalized absorption ratios, and connected-component spatial filtering to detect coastal lagoons and retention ponds while rejecting dark building shadows.
+* **Bi-Temporal Change Analysis (CVA + Otsu):** Automatically registers Before/After image pairs using ORB feature matching and RANSAC homography, computes Euclidean Change Vector Analysis (CVA), and applies dynamic Otsu thresholding with morphological cleaning to extract changed terrain.
+* **Land-Cover Classification:** Unsupervised MiniBatch K-Means clustering combined with Scharr gradient texture analysis and rule-based assignment across water, vegetation, built-up, bare soil, and other classes.
+* **Object Localization & Grounding:** Open-vocabulary target detection using Grounding DINO and polygon segmentation using Segment Anything Model 2 (SAM 2) for identifying discrete objects (vehicles, storage tanks, ships, roads).
+* **Scientific Honesty & Confidence Engine:** Transparently categorizes all output data into epistemological tiers (`OBSERVED`, `DERIVED`, `DETECTED`, `AI-DETECTED`) and dynamically scales confidence scores (e.g., from 100% down to 40%–60% when non-georeferenced RGB inputs are used).
 
 ---
 
