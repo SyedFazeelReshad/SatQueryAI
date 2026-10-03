@@ -7,18 +7,37 @@
 ---
 
 ## 📌 Architecture Overview
-
 ```mermaid
 flowchart TD
-    A[Satellite / Aerial Scene] --> B[FastAPI Ingestion Engine]
-    B --> C[Rasterio Band Preprocessing]
-    C --> D[Spectral Analysis: NDVI / NDWI]
-    C --> E[Multimodal Vision Reasoning: Gemini 1.5 Flash]
-    D --> F[Evidence & Proxy Measurement Store]
-    E --> F
-    F --> G[Interactive Grounded Q&A]
-    F --> H[Export Engine: Markdown / JSON / PDF]
 
+    A["USER QUERY + SATELLITE IMAGERY"] --> B["AGENTIC ROUTER & PLANNER<br/>Classifies query intent & builds task plan"]
+
+    B --> C
+    B --> D
+
+    C["ENGINE 1: PHYSICS<br/><br/>
+    Deterministic Math<br/>
+    ─────────────────────<br/>
+    • Rasterio / GDAL I/O<br/>
+    • NDVI / NDWI / NDBI<br/>
+    • RGB-HSV Water Proxy<br/>
+    • CVA Change Detection<br/>
+    • ORB + RANSAC Align"]
+
+    D["ENGINE 2: GROUNDED VISION-LANGUAGE<br/><br/>
+    • Qwen2-VL-2B (LoRA)<br/>
+    • Grounding DINO + SAM2<br/>
+    • Strict Context Prompt<br/>
+    • No Hallucination"]
+
+    C -->|Exact Metrics & Masks| E
+    D -->|Natural Explanation| E
+
+    E["EVIDENCE & AUDIT ENGINE<br/><br/>
+    Assigns provenance tags & confidence scores"]
+
+    E --> F["STRUCTURED RESULTS + MULTI-LAYER VIEWER<br/><br/>
+    Side-by-Side • Overlay • JSON & MD"]
 ```
 
 ---
