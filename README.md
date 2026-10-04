@@ -48,44 +48,10 @@ SatQuery AI enables operators to interact with complex geospatial rasters throug
 
 | Pipeline & Input | Example Query | Deterministic & Vision Processing | Interactive Visualizer & Output |
 | --- | --- | --- | --- |
-| **Single-Scene Optical**<br>
-
-<br>*(Sentinel-2 RGB / Multispectral)* | *"Describe the land cover and isolate water bodies in this scene."* | • Radiometric index calculation (NDVI, NDWI, NDBI)<br>
-
-<br>• HSV spectral filtering & absorption ratios<br>
-
-<br>• MiniBatch K-Means land-cover clustering | • **Interactive Layer Toggles:** Switch instantly between True Color (RGB), isolated Water, Vegetation vigor, and Land Cover masks.<br>
-
-<br>• **Deterministic Cards:** Exact calculated surface fractions (no AI estimation). |
-| **Bi-Temporal Change Pair**<br>
-
-<br>*(T1 Baseline + T2 Target)* | *"What areas have changed between these two dates and quantify the shift?"* | • Automated feature co-registration (ORB + RANSAC)<br>
-
-<br>• Change Vector Analysis (CVA)<br>
-
-<br>• Dynamic Otsu thresholding & morphological filtering | • **Change Mask Highlighting:** Visually isolate zones of deforestation, urban expansion, or flood recession.<br>
-
-<br>• **Difference Inspection Slider:** Split-view before/after comparison.<br>
-
-<br>• **Shift Metrics:** Exact changed area in percentage and hectares/km². |
-| **Cross-Modal SAR Fusion**<br>
-
-<br>*(Sentinel-2 Optical + Sentinel-1 SAR)* | *"Penetrate cloud cover using radar backscatter to assess flood inundation."* | • Polarimetric backscatter analysis ($\sigma^0$ VV/VH)<br>
-
-<br>• Multi-sensor spatial co-registration<br>
-
-<br>• Joint spectral-structural feature fusion | • **All-Weather Structural View:** Visualizes ground features obscured by clouds or nighttime.<br>
-
-<br>• **Moisture & Roughness Maps:** Distinguishes smooth open water from rough built infrastructure. |
-| **Target Localization & Grounding**<br>
-
-<br>*(Single Scene / Tile)* | *"Locate industrial storage tanks and coastal vessels."* | • Open-vocabulary grounding (Grounding DINO)<br>
-
-<br>• Fine-grained polygon segmentation (SAM 2)<br>
-
-<br>• High-reflectance amplitude filtering | • **Interactive Bounding Overlays:** Visual grounding boxes with semantic label tags.<br>
-
-<br>• **Object Count & Coordinates:** Exact pixel centroids and bounding extents. |
+| **Single-Scene Optical**<br>*(Sentinel-2 RGB / Multispectral)* | *"Describe the land cover and isolate water bodies in this scene."* | • Radiometric index calculation (NDVI, NDWI, NDBI)<br>• HSV spectral filtering & absorption ratios<br>• MiniBatch K-Means land-cover clustering | • **Interactive Layer Toggles:** Switch instantly between True Color (RGB), isolated Water, Vegetation vigor, and Land Cover masks.<br>• **Deterministic Cards:** Exact calculated surface fractions (no AI estimation). |
+| **Bi-Temporal Change Pair**<br>*(T1 Baseline + T2 Target)* | *"What areas have changed between these two dates and quantify the shift?"* | • Automated feature co-registration (ORB + RANSAC)<br>• Change Vector Analysis (CVA)<br>• Dynamic Otsu thresholding & morphological filtering | • **Change Mask Highlighting:** Visually isolate zones of deforestation, urban expansion, or flood recession.<br>• **Difference Inspection Slider:** Split-view before/after comparison.<br>• **Shift Metrics:** Exact changed area in percentage and hectares/km². |
+| **Cross-Modal SAR Fusion**<br>*(Sentinel-2 Optical + Sentinel-1 SAR)* | *"Penetrate cloud cover using radar backscatter to assess flood inundation."* | • Polarimetric backscatter analysis ($\sigma^0$ VV/VH)<br>• Multi-sensor spatial co-registration<br>• Joint spectral-structural feature fusion | • **All-Weather Structural View:** Visualizes ground features obscured by clouds or nighttime.<br>• **Moisture & Roughness Maps:** Distinguishes smooth open water from rough built infrastructure. |
+| **Target Localization & Grounding**<br>*(Single Scene / Tile)* | *"Locate industrial storage tanks and coastal vessels."* | • Open-vocabulary grounding (Grounding DINO)<br>• Fine-grained polygon segmentation (SAM 2)<br>• High-reflectance amplitude filtering | • **Interactive Bounding Overlays:** Visual grounding boxes with semantic label tags.<br>• **Object Count & Coordinates:** Exact pixel centroids and bounding extents. |
 
 ---
 
@@ -134,4 +100,3 @@ Every query execution delivers an end-to-end, multi-layered dashboard:
 | **Stage 1** | ✅ Complete | Core foundation — Rasterio pipeline, spectral indices, REST API endpoints, and dashboard UI |
 | **Stage 2** | ✅ Complete | Multimodal VLM reasoning & zero-shot geospatial feature grounding |
 | **Stage 3** | ✅ Complete | Full agentic tool execution with custom segmentation overlays |
-
